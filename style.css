@@ -190,7 +190,7 @@ nav button.active {
   position: relative;
 }
 
-.hero h1 .lw { color: var(--lakers-gold); }
+.hero h1 .lw { color: var(--lakers); }
 .hero h1 .ww { color: var(--warriors-gold); }
 
 .hero p {
