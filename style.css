@@ -1,0 +1,477 @@
+/* ── CSS Variables ───────────────────────────────────────────────────────── */
+:root {
+  --lakers: #552583;
+  --lakers-gold: #FDB927;
+  --warriors: #1D428A;
+  --warriors-gold: #FFC72C;
+  --bg: #0a0a0f;
+  --surface: #13131a;
+  --surface2: #1c1c28;
+  --border: rgba(255, 255, 255, 0.07);
+  --text: #f0f0f0;
+  --muted: #7a7a8a;
+  --accent: #FDB927;
+}
+
+/* ── Reset ───────────────────────────────────────────────────────────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── Loading Overlay ─────────────────────────────────────────────────────── */
+#loadingOverlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  gap: .75rem;
+}
+
+.loader-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  color: var(--accent);
+  letter-spacing: 4px;
+}
+
+.loader-title span {
+  color: var(--warriors-gold);
+}
+
+.loader-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .75rem;
+  color: var(--muted);
+  letter-spacing: 2px;
+}
+
+.loader-file {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .65rem;
+  color: #555;
+  min-height: 1em;
+}
+
+.loader-bar-wrap {
+  width: 260px;
+  height: 4px;
+  background: var(--surface2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.loader-bar {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  width: 0%;
+  transition: width .3s ease;
+}
+
+/* ── Navigation ──────────────────────────────────────────────────────────── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10, 10, 15, 0.93);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  height: 60px;
+  gap: 1.5rem;
+}
+
+.nav-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-right: auto;
+  white-space: nowrap;
+}
+
+.nav-brand span {
+  color: var(--warriors-gold);
+}
+
+nav button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: all .2s;
+  white-space: nowrap;
+}
+
+nav button:hover {
+  color: var(--text);
+  background: var(--surface2);
+}
+
+nav button.active {
+  color: var(--accent);
+  background: rgba(253, 185, 39, 0.1);
+  border-bottom: 2px solid var(--accent);
+}
+
+/* ── Page Transitions ────────────────────────────────────────────────────── */
+.page {
+  display: none;
+  animation: fadeIn .3s ease;
+}
+
+.page.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Hero Section ────────────────────────────────────────────────────────── */
+.hero {
+  min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 50%, rgba(85, 37, 131, .25) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 80% 50%, rgba(29, 66, 138, .25) 0%, transparent 70%);
+}
+
+.hero-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .7rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: .95;
+  letter-spacing: 3px;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.hero h1 .lw { color: var(--lakers-gold); }
+.hero h1 .ww { color: var(--warriors-gold); }
+
+.hero p {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 520px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.team-chips {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+}
+
+.chip {
+  padding: 8px 20px;
+  border-radius: 100px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .75rem;
+  letter-spacing: 1px;
+  font-weight: 600;
+  border: 2px solid;
+}
+
+.chip.lakers   { border-color: var(--lakers);   color: var(--lakers-gold);   background: rgba(85, 37, 131, .15); }
+.chip.warriors { border-color: var(--warriors); color: var(--warriors-gold); background: rgba(29, 66, 138, .15); }
+
+/* ── Feature Grid (Home) ─────────────────────────────────────────────────── */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 900px;
+  margin: 3rem auto;
+}
+
+.feature-card {
+  background: var(--surface);
+  padding: 2rem;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.feature-card:hover { background: var(--surface2); }
+
+.feature-icon {
+  font-size: 1.8rem;
+  margin-bottom: .75rem;
+}
+
+.feature-card h3 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent);
+  margin-bottom: .4rem;
+}
+
+.feature-card p {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ── Page Layout ─────────────────────────────────────────────────────────── */
+.page-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+}
+
+.page-header { margin-bottom: 2rem; }
+
+.page-header h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.4rem;
+  letter-spacing: 2px;
+}
+
+.page-header p {
+  color: var(--muted);
+  font-size: .88rem;
+  margin-top: 4px;
+}
+
+/* ── Controls & Select ───────────────────────────────────────────────────── */
+.controls {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+select {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .78rem;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  outline: none;
+}
+
+select:focus { border-color: var(--accent); }
+
+/* ── Card ────────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.card-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+/* ── Grids ───────────────────────────────────────────────────────────────── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr;       gap: 1.5rem; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr;   gap: 1.5rem; }
+
+@media (max-width: 700px) {
+  .grid-2,
+  .grid-3 { grid-template-columns: 1fr; }
+}
+
+/* ── Player Card ─────────────────────────────────────────────────────────── */
+.player-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.player-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.player-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .9rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.badge-lakers   { background: rgba(85, 37, 131, .4); border: 2px solid var(--lakers);   color: var(--lakers-gold); }
+.badge-warriors { background: rgba(29, 66, 138, .4); border: 2px solid var(--warriors); color: var(--warriors-gold); }
+
+.player-name { font-weight: 600; font-size: .95rem; }
+.player-team { font-size: .72rem; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+
+/* ── Stat Bars ───────────────────────────────────────────────────────────── */
+.stat-bars  { display: flex; flex-direction: column; gap: .6rem; margin-top: 1rem; }
+.stat-row   { display: flex; align-items: center; gap: .75rem; }
+
+.stat-label {
+  width: 36px;
+  color: var(--muted);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .68rem;
+}
+
+.stat-bar-bg {
+  flex: 1;
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.stat-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width .6s ease;
+}
+
+.stat-val {
+  width: 40px;
+  text-align: right;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .72rem;
+}
+
+/* ── Stat Card ───────────────────────────────────────────────────────────── */
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.stat-card-label {
+  font-size: .68rem;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.stat-card-values {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  margin-top: .5rem;
+}
+
+.stat-team      { display: flex; flex-direction: column; }
+.stat-team-name { font-size: .65rem; font-family: 'IBM Plex Mono', monospace; color: var(--muted); }
+.stat-team-val  { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; }
+
+.val-lakers   { color: var(--lakers-gold); }
+.val-warriors { color: var(--warriors-gold); }
+
+.divider { color: var(--border); font-size: 1.5rem; align-self: center; }
+
+/* ── Legend ──────────────────────────────────────────────────────────────── */
+.legend      { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: .75rem; font-family: 'IBM Plex Mono', monospace; }
+.legend-dot  { width: 10px; height: 10px; border-radius: 50%; }
+
+/* ── Winner Badge ────────────────────────────────────────────────────────── */
+.winner-badge { font-size: .6rem; padding: 2px 7px; border-radius: 4px; }
+.win-lal { background: rgba(253, 185, 39, .15); color: var(--lakers-gold);   border: 1px solid rgba(253, 185, 39, .3); }
+.win-gsw { background: rgba(255, 199, 44, .15); color: var(--warriors-gold); border: 1px solid rgba(255, 199, 44, .3); }
+
+/* ── Save Button ─────────────────────────────────────────────────────────── */
+.save-btn {
+  margin-top: 1rem;
+  padding: 7px 16px;
+  background: rgba(253, 185, 39, .1);
+  border: 1px solid rgba(253, 185, 39, .3);
+  color: var(--accent);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .72rem;
+  letter-spacing: 1px;
+  transition: all .2s;
+}
+
+.save-btn:hover { background: rgba(253, 185, 39, .2); }
+
+/* ── Data Source Note ────────────────────────────────────────────────────── */
+.data-note {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .65rem;
+  color: var(--muted);
+  margin-top: 1.5rem;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  display: inline-block;
+}

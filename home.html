@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lakers vs Warriors — Comparative Analysis</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOADING OVERLAY -->
+<div id="loadingOverlay">
+  <div class="loader-title">LAL <span>vs</span> GSW</div>
+  <div class="loader-sub">LOADING DATASETS</div>
+  <div class="loader-bar-wrap"><div class="loader-bar" id="loaderBar"></div></div>
+  <div class="loader-file" id="loaderFile">Initializing...</div>
+</div>
+
+<nav>
+  <div class="nav-brand">LAL <span>vs</span> GSW</div>
+  <button class="active" onclick="showPage('home',this)">Home</button>
+  <button onclick="showPage('season',this)">Season Selector</button>
+  <button onclick="showPage('player',this)">Player Comparison</button>
+  <button onclick="showPage('team',this)">Team Comparison</button>
+  <button onclick="showPage('analytics',this)">Team Analytics</button>
+</nav>
+
+<!-- HOME -->
+<div id="home" class="page active">
+  <div class="hero">
+    <p class="hero-eyebrow">2020–2025 · NBA Performance Dashboard · Basketball-Reference Data</p>
+    <h1>
+      <span class="lw">Los Angeles</span><br>
+      Lakers <span style="color:#333">vs</span><br>
+      <span class="ww">Golden State</span><br>Warriors
+    </h1>
+    <p>A comparative visualization system exploring five seasons of real statistics, player metrics, and team analytics between two iconic NBA franchises. All data sourced from Basketball-Reference.</p>
+    <div class="team-chips">
+      <div class="chip lakers">Los Angeles Lakers</div>
+      <div class="chip warriors">Golden State Warriors</div>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card" onclick="showPageByName('season')">
+        <h3>Season Selector</h3>
+        <p>Browse real team stats filtered by individual seasons from 2020–2025.</p>
+      </div>
+      <div class="feature-card" onclick="showPageByName('player')">
+        <h3>Player Comparison</h3>
+        <p>Select any two players and compare their performance across key metrics.</p>
+      </div>
+      <div class="feature-card" onclick="showPageByName('team')">
+        <h3>Team Comparison</h3>
+        <p>Compare team-level stats like points, rebounds, and assists per season.</p>
+      </div>
+      <div class="feature-card" onclick="showPageByName('analytics')">
+        <h3>Team Analytics</h3>
+        <p>Scoring trends, FG% evolution, and three-point volume across all five seasons.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEASON SELECTOR -->
+<div id="season" class="page">
+  <div class="page-content">
+    <div class="page-header">
+      <h2>Season Selector</h2>
+      <p>Select a season to view per-game team statistics. Data sourced from Basketball-Reference CSV files.</p>
+    </div>
+    <div class="controls">
+      <select id="seasonSelect" onchange="updateSeasonPage()">
+        <option value="2020">2020–2021</option>
+        <option value="2021">2021–2022</option>
+        <option value="2022">2022–2023</option>
+        <option value="2023">2023–2024</option>
+        <option value="2024">2024–2025</option>
+      </select>
+    </div>
+    <div class="grid-3" style="margin-bottom:1.5rem" id="seasonStatCards"></div>
+    <div class="card">
+      <div class="card-title">Points / Rebounds / Assists / FG% — Season Averages Per Game</div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--lakers-gold)"></div>Lakers</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--warriors-gold)"></div>Warriors</div>
+      </div>
+      <canvas id="seasonChart" height="90"></canvas>
+    </div>
+    <div class="data-note">Source: Basketball-Reference · datasets/lakers/ &amp; datasets/warriors/ · Team Totals row</div>
+  </div>
+</div>
+
+<!-- PLAYER COMPARISON -->
+<div id="player" class="page">
+  <div class="page-content">
+    <div class="page-header">
+      <h2>Player Comparison</h2>
+      <p>Select one player from each team. Stats reflect each player's best individual season (2020–2025).</p>
+    </div>
+    <div class="controls">
+      <select id="player1Select" onchange="updatePlayerPage()"></select>
+      <select id="player2Select" onchange="updatePlayerPage()"></select>
+    </div>
+    <div class="grid-2">
+      <div class="player-card">
+        <div class="player-header">
+          <div class="player-badge badge-lakers" id="p1badge">L</div>
+          <div>
+            <div class="player-name" id="p1name"></div>
+            <div class="player-team">Los Angeles Lakers</div>
+          </div>
+        </div>
+        <canvas id="radarChart1" height="230"></canvas>
+        <div class="stat-bars" id="statBars1"></div>
+        <button class="save-btn" onclick="saveChart('radarChart1')">⬇ Save Chart</button>
+      </div>
+      <div class="player-card">
+        <div class="player-header">
+          <div class="player-badge badge-warriors" id="p2badge">W</div>
+          <div>
+            <div class="player-name" id="p2name"></div>
+            <div class="player-team">Golden State Warriors</div>
+          </div>
+        </div>
+        <canvas id="radarChart2" height="230"></canvas>
+        <div class="stat-bars" id="statBars2"></div>
+        <button class="save-btn" onclick="saveChart('radarChart2')">⬇ Save Chart</button>
+      </div>
+    </div>
+    <div class="data-note">Source: Basketball-Reference · Season CSVs · Best season per player (highest PPG)</div>
+  </div>
+</div>
+
+<!-- TEAM COMPARISON -->
+<div id="team" class="page">
+  <div class="page-content">
+    <div class="page-header">
+      <h2>Team Comparison</h2>
+      <p>Compare real team-level per-game statistics side by side for a selected season.</p>
+    </div>
+    <div class="controls">
+      <select id="teamSeasonSelect" onchange="updateTeamPage()">
+        <option value="2020">2020–2021</option>
+        <option value="2021">2021–2022</option>
+        <option value="2022">2022–2023</option>
+        <option value="2023">2023–2024</option>
+        <option value="2024">2024–2025</option>
+      </select>
+    </div>
+    <div class="card" style="margin-bottom:1.5rem">
+      <div class="card-title">Points / Rebounds / Assists Per Game</div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--lakers-gold)"></div>Lakers</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--warriors-gold)"></div>Warriors</div>
+      </div>
+      <canvas id="teamBarChart" height="90"></canvas>
+    </div>
+    <div class="grid-3" id="teamStatCards"></div>
+    <div class="data-note">Source: Basketball-Reference · Team Totals row per season CSV</div>
+  </div>
+</div>
+
+<!-- TEAM ANALYTICS -->
+<div id="analytics" class="page">
+  <div class="page-content">
+    <div class="page-header">
+      <h2>Team Analytics</h2>
+      <p>Five-season trends: scoring output, field goal efficiency, and three-point volume (2020–2025).</p>
+    </div>
+    <div class="grid-2" style="margin-bottom:1.5rem">
+      <div class="card">
+        <div class="card-title">Points Per Game — All Seasons</div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--lakers-gold)"></div>Lakers</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--warriors-gold)"></div>Warriors</div>
+        </div>
+        <canvas id="ptsChart" height="180"></canvas>
+      </div>
+      <div class="card">
+        <div class="card-title">Field Goal % — All Seasons</div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--lakers-gold)"></div>Lakers FG%</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--warriors-gold)"></div>Warriors FG%</div>
+        </div>
+        <canvas id="fgChart" height="180"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Three-Point Attempts Per Game — 5 Season Trend</div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--lakers-gold)"></div>Lakers 3PA/G</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--warriors-gold)"></div>Warriors 3PA/G</div>
+      </div>
+      <canvas id="threeChart" height="70"></canvas>
+    </div>
+    <div class="data-note">Source: Basketball-Reference · All season CSV files · Team Totals row</div>
+  </div>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
