@@ -100,14 +100,13 @@ nav {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1.4rem;
   letter-spacing: 2px;
-  color: var(--accent);
   margin-right: auto;
   white-space: nowrap;
 }
 
-.nav-brand span {
-  color: var(--warriors-gold);
-}
+.brand-lal { color: var(--lakers); }
+.brand-vs  { color: var(--muted); font-size: 1rem; }
+.brand-gsw { color: var(--warriors-gold); }
 
 nav button {
   background: none;
