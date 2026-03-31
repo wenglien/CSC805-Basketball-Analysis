@@ -442,7 +442,7 @@ select:focus { border-color: var(--accent); }
 
 /* ── Winner Badge ────────────────────────────────────────────────────────── */
 .winner-badge { font-size: .6rem; padding: 2px 7px; border-radius: 4px; }
-.win-lal { background: rgba(253, 185, 39, .15); color: var(--lakers-gold);   border: 1px solid rgba(253, 185, 39, .3); }
+.win-lal { background: rgba(85, 37, 131, .15); color: var(--lakers);        border: 1px solid rgba(85, 37, 131, .4); }
 .win-gsw { background: rgba(255, 199, 44, .15); color: var(--warriors-gold); border: 1px solid rgba(255, 199, 44, .3); }
 
 /* ── Save Button ─────────────────────────────────────────────────────────── */
