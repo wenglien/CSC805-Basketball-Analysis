@@ -431,7 +431,7 @@ select:focus { border-color: var(--accent); }
 .stat-team-name { font-size: .65rem; font-family: 'IBM Plex Mono', monospace; color: var(--muted); }
 .stat-team-val  { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; }
 
-.val-lakers   { color: var(--lakers-gold); }
+.val-lakers   { color: var(--lakers); }
 .val-warriors { color: var(--warriors-gold); }
 
 .divider { color: var(--border); font-size: 1.5rem; align-self: center; }

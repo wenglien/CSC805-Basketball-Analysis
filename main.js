@@ -1,6 +1,6 @@
 // ── CONSTANTS ─────────────────────────────────────────────────────────────────
-const LC = '#FDB927', WC = '#FFC72C';
-const LB = 'rgba(253,185,39,.15)', WB = 'rgba(255,199,44,.15)';
+const LC = '#552583', WC = '#FFC72C';
+const LB = 'rgba(85,37,131,.15)', WB = 'rgba(255,199,44,.15)';
 const GRID_DARK = 'rgba(255,255,255,.05)';
 
 // Radar chart: normalization ceiling for each stat
